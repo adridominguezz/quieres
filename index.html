@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Botones</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        position: relative;
+        background-color: aquamarine;
+    }
+    .container {
+        text-align: center;
+    }
+    button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Añadir sombra a los botones */
+    }
+    #siButton {
+        background-color: green;
+        color: white;
+    }
+    #noButton {
+        background-color: red;
+        color: white;
+    }
+    h1 {
+        font-family: Arial, sans-serif; /* Utilizar la fuente Arial para el texto */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Añadir sombra al texto */
+    }
+    .hidden {
+        display: none;
+    }
+    .randomImage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1; /* Colocar la imagen detrás del contenedor de los botones */
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="shark">
+        <!-- Aquí se insertará la imagen -->
+    </div>
+    <div class="test"> 
+        <h1>¿Vas a querer?</h1>
+        <button id="siButton">Sí</button>
+        <button id="noButton">No</button>
+    </div>
+</div>
+
+<audio id="audio" src="./musica.mp3" loop></audio> <!-- Reemplaza 'tu_audio.mp3' con la ruta de tu archivo de audio -->
+
+<script>
+    const noButton = document.getElementById('noButton');
+    let audioPlayed = false;
+
+    noButton.addEventListener('click', () => {
+        // Si el audio no se ha reproducido todavía, iniciar la reproducción
+        if (!audioPlayed) {
+            const audio = document.getElementById('audio');
+            audio.play();
+            audioPlayed = true; // Establecer la bandera a true para indicar que el audio se ha reproducido
+        }
+
+        // Mover el botón a un lugar aleatorio en la página
+        const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
+        const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
+        noButton.style.position = 'absolute';
+        noButton.style.left = randomX + 'px';
+        noButton.style.top = randomY + 'px';
+
+        // Crear un nuevo elemento de imagen
+        const img = document.createElement('img');
+        img.src = 'tu_archivo.png'; // Reemplaza 'tu_archivo.png' con la ruta de tu archivo PNG
+        img.classList.add('randomImage');
+        img.style.left = randomX + 'px';
+        img.style.top = randomY + 'px';
+
+        // Agregar la imagen antes del div de los botones
+        const sharkDiv = document.querySelector('.shark');
+        sharkDiv.parentNode.insertBefore(img, sharkDiv);
+    });
+
+    const siButton = document.getElementById('siButton');
+
+    siButton.addEventListener('click', () => {
+        // Abrir el PDF
+        window.location.href = './entradas.pdf';
+    });
+</script>
+
+</body>
+</html>
